@@ -1,0 +1,47 @@
+# Gradle / IDE
+.gradle/
+.kotlin/
+.idea/
+*.iml
+local.properties
+**/build/
+captures/
+.cxx/
+.externalNativeBuild/
+
+# Build outputs
+*.apk
+*.aab
+*.ap_
+*.dex
+
+# SDK / upstream archives
+sdk/
+sample-android/
+CubismSdkForNative-5-r.5.zip
+CubismWebSamples.zip
+material3-sources.jar
+tree.json
+
+# Web dependencies
+web3d/node_modules/
+
+# Model assets and test models (download separately / user supplied)
+app/src/main/assets/Hiyori/
+app/src/main/assets/Haru/
+app/src/main/assets/Mao/
+testmodels/
+
+# Local screenshots and icon drafts
+shot*.png
+icon-concepts/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Official web samples / temporary SDK extracts
+web/
+
+# Official sample archives
+web-samples.zip
