@@ -27,11 +27,11 @@
   - Live2D：导入包含 `.model3.json` 的 zip
   - 3D：导入单文件 `.vrm` / `.glb`
   - 导入后保存在应用私有目录，自动刷新模型列表
-- **统一 UI（2D / 3D 共用）**
+- **Material 3 Expressive 界面**
   - Material 3 Expressive：动态取色、表达性动效、悬浮工具栏
   - 深浅色 / 跟随系统主题
   - 简体中文、繁体中文、English、日本語、한국어
-  - 2D / 3D 共用顶部状态、性能卡和设置面板
+  - 顶部状态、性能卡和设置面板
 - **性能选项**
   - 目标帧率、渲染分辨率、裁剪遮罩分辨率
   - 自适应分辨率、Mipmap、ADPF
@@ -160,8 +160,8 @@ MyModel/
 ```text
 app/src/main/java/com/winkmoon/xinran/
 ├── MainActivity.kt          # 单 Activity 入口
-├── MoonApp.kt               # 主题与统一壳
-├── UnifiedViewerApp.kt      # 2D/3D 共用 UI 与设置
+├── MoonApp.kt               # 主题入口
+├── UnifiedViewerApp.kt      # 2D/3D 内容与设置
 ├── Live2DApp.kt             # Live2D 内容区
 ├── Live2DView.kt            # GLSurfaceView / 帧率 / 动态分辨率
 ├── Live2DNative.kt          # JNI 声明
@@ -182,7 +182,7 @@ fetch_cubism.py              # Live2D SDK 下载辅助
 
 - **2D**：`GLSurfaceView` GL 线程 → Cubism Native → OpenGL ES 2.0
 - **3D**：`WebView` + `WebViewAssetLoader` → three.js / three-vrm → WebGL
-- **UI**：Jetpack Compose 覆盖在内容区之上，2D/3D 共用同一套 Chrome
+- **UI**：Jetpack Compose 覆盖在内容区之上
 
 ---
 
