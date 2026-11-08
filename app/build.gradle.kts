@@ -1,4 +1,5 @@
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+import java.util.Properties
 
 plugins {
     id("com.android.application") version "9.4.1"
@@ -8,6 +9,13 @@ plugins {
 val live2dSdk: String = (findProperty("live2dSdk") as String?)
     ?: System.getenv("LIVE2D_SDK")
     ?: rootProject.file("sdk/CubismSdkForNative-5-r.5").absolutePath
+
+val keystorePropertiesFile = rootProject.file("keystore.properties")
+val keystoreProperties = Properties().apply {
+    if (keystorePropertiesFile.exists()) {
+        keystorePropertiesFile.inputStream().use { load(it) }
+    }
+}
 
 android {
     namespace = "com.winkmoon.xinran"
@@ -20,11 +28,6 @@ android {
         targetSdk = 36
         versionCode = 1
         versionName = "1.0.0"
-
-        ndk {
-            // Cubism 5 ships Android Core libraries for these ABIs.
-            abiFilters += listOf("arm64-v8a", "x86_64")
-        }
 
         externalNativeBuild {
             cmake {
@@ -45,6 +48,15 @@ android {
         }
     }
 
+    splits {
+        abi {
+            isEnable = true
+            reset()
+            include("arm64-v8a", "x86_64")
+            isUniversalApk = false
+        }
+    }
+
     buildFeatures {
         compose = true
     }
@@ -54,8 +66,24 @@ android {
         targetCompatibility = JavaVersion.VERSION_17
     }
 
+    signingConfigs {
+        create("release") {
+            enableV1Signing = true
+            enableV2Signing = true
+            enableV3Signing = true
+            enableV4Signing = true
+            if (keystorePropertiesFile.exists()) {
+                storeFile = rootProject.file(keystoreProperties.getProperty("storeFile"))
+                storePassword = keystoreProperties.getProperty("storePassword")
+                keyAlias = keystoreProperties.getProperty("keyAlias")
+                keyPassword = keystoreProperties.getProperty("keyPassword")
+            }
+        }
+    }
+
     buildTypes {
         release {
+            signingConfig = signingConfigs.getByName("release")
             isMinifyEnabled = true
             isShrinkResources = true
             proguardFiles(

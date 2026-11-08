@@ -48,3 +48,12 @@ web-samples.zip
 
 # Original screenshot source folder
 图/
+
+# Private signing material (never commit)
+keystore/
+keystore.properties
+*.jks
+*.keystore
+
+# Release artifacts
+dist/

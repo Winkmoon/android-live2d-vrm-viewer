@@ -13,36 +13,30 @@
 
 ## 功能
 
-- **Live2D Cubism 5 原生渲染**
-  - 官方 Cubism Native SDK / OpenGL ES 渲染器
+- **Live2D 虚拟形象**
   - 动作、表情、物理、呼吸、眨眼、视线跟随
   - 双指捏合缩放模型（0.5x–3.0x）
   - 长按振动后单指拖动模型位置
   - 模型切换、参数重置、动作随机播放
 - **VRM / GLB 3D 形象**
-  - three.js + `@pixiv/three-vrm`
-  - WebView 内离线渲染，支持 VRM 0.x / VRM 1.0 / GLB
-  - MToon 材质、SpringBone、LookAt、基础待机动作
+  - 支持 VRM 0.x / VRM 1.0 与 GLB
+  - 材质、骨骼摆动、视线跟随、基础待机动作
 - **模型导入**
   - Live2D：导入包含 `.model3.json` 的 zip
   - 3D：导入单文件 `.vrm` / `.glb`
   - 导入后保存在应用私有目录，自动刷新模型列表
 - **Material 3 Expressive 界面**
-  - Material 3 Expressive：动态取色、表达性动效、悬浮工具栏
+  - 动态取色、表达性动效、悬浮工具栏
   - 深浅色 / 跟随系统主题
   - 简体中文、繁体中文、English、日本語、한국어
   - 顶部状态、性能卡和设置面板
-- **性能选项**
-  - 目标帧率、渲染分辨率、裁剪遮罩分辨率
-  - 自适应分辨率、Mipmap、ADPF
-  - Surface `setFrameRate` + 显示模式请求
-  - 可选 Root 性能模式（CPU/GPU governor）
-  - 可选 Root 强制刷新率（SurfaceFlinger 显示模式）
+- **性能与显示**
+  - 目标帧率、渲染分辨率可调
+  - 自适应分辨率
+  - 可选 Root 性能模式
+  - 可选 Root 刷新率控制
 - **兼容性**
-  - `minSdk 28`（Android 9）
-  - `targetSdk 36`
-  - `compileSdk 37`
-  - 支持 `arm64-v8a` 与 `x86_64`
+  - Android 9 及以上
 
 ---
 
@@ -186,20 +180,12 @@ fetch_cubism.py              # Live2D SDK 下载辅助
 
 ---
 
-## 性能说明
+## 性能与 Root
 
-- Live2D 使用独立 GL 渲染线程
-- 支持动态分辨率、Mipmap、裁剪遮罩缓冲缩放
-- 支持 ADPF（`PerformanceHintManager`）向系统报告实际 CPU 帧耗时
-- Root 性能模式会尝试写入 CPU/GPU governor，退出时恢复原值
-- Root 强制刷新率会通过 SurfaceFlinger `1035` 直接切换显示模式，退出时恢复
-
-### 注意事项
-
+- 目标帧率和渲染分辨率可调，支持自适应分辨率
 - Root 功能完全可选；不授予 Root 时应用正常运行
 - 不同厂商可能限制普通应用的刷新率，实际值以系统为准
 - **游戏空间 / 游戏模式可能限制屏幕旋转或刷新率**，建议不要将 Moon 加入游戏空间
-- Root 命令使用统一的 `RootShell`，支持 `su -c`、自定义前缀以及 `{cmd}` 占位符
 
 ---
 
