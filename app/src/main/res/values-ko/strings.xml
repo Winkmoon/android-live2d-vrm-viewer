@@ -111,11 +111,11 @@
     <string name="avatar3d_import">VRM/GLB 가져오기</string>
     <string name="avatar3d_models">3D 모델</string>
     <string name="avatar3d_reset">시점 초기화</string>
-    <string name="avatar3d_empty">오른쪽 위 +에서 .vrm 또는 .glb 아바타를 가져오세요.</string>
+    <string name="avatar3d_empty">하단 "모델" 메뉴에서 .vrm 또는 .glb 아바타를 가져오세요.</string>
     <string name="avatar3d_empty_short">선택된 아바타 없음</string>
     <string name="avatar3d_importing">아바타 가져오는 중…</string>
     <string name="avatar3d_import_failed">가져오기 실패. .vrm 또는 .glb 파일을 선택하세요.</string>
-    <string name="avatar3d_import_hint">단일 파일 .vrm/.glb 지원. 오른쪽 위 +에서 가져오세요. FBX, .unitypackage, .vrca는 지원하지 않습니다.</string>
+    <string name="avatar3d_import_hint">단일 파일 .vrm/.glb 지원. 하단 "모델" 메뉴에서 가져오세요. FBX, .unitypackage, .vrca는 지원하지 않습니다.</string>
     <string name="avatar3d_no_models">아직 3D 아바타가 없습니다.</string>
     <string name="avatar3d_settings">3D 설정</string>
     <string name="avatar3d_settings_subtitle">WebView 렌더러 옵션</string>

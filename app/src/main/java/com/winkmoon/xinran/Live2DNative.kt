@@ -72,6 +72,10 @@ external fun nativeOnDrawFrame()
 external fun nativeOnTouchesBegan(x: Float, y: Float)
 external fun nativeOnTouchesEnded(x: Float, y: Float)
 external fun nativeOnTouchesMoved(x: Float, y: Float)
+external fun nativeOnTouchesCancelled()
+external fun nativeSetModelScale(scale: Float)
+external fun nativeTranslateModel(dx: Float, dy: Float)
+external fun nativeResetModelPosition()
 
 // Imported model root / refresh.
 external fun nativeSetImportedRoot(path: String)

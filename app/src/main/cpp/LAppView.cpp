@@ -154,6 +154,11 @@ void LAppView::OnTouchesEnded(float pointX, float pointY)
     }
 }
 
+void LAppView::OnTouchesCancelled()
+{
+    LAppLive2DManager::GetInstance()->OnDrag(0.0f, 0.0f);
+}
+
 void LAppView::PreModelDraw(LAppModel &refModel)
 {
     // 別のレンダリングターゲットへ向けて描画する場合の使用するフレームバッファ

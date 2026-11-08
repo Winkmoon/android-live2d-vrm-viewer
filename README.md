@@ -16,6 +16,8 @@
 - **Live2D Cubism 5 原生渲染**
   - 官方 Cubism Native SDK / OpenGL ES 渲染器
   - 动作、表情、物理、呼吸、眨眼、视线跟随
+  - 双指捏合缩放模型（0.5x–3.0x）
+  - 长按振动后单指拖动模型位置
   - 模型切换、参数重置、动作随机播放
 - **VRM / GLB 3D 形象**
   - three.js + `@pixiv/three-vrm`
@@ -46,20 +48,16 @@
 
 ## 截图
 
-截图放在 `docs/screenshots/`，建议至少包含：
+<p align="center">
+  <img src="docs/screenshots/l2d-home.jpg" width="260" alt="Live2D 主界面">
+  <img src="docs/screenshots/l2d-stats.jpg" width="260" alt="Live2D 信息显示">
+  <img src="docs/screenshots/model-import.jpg" width="260" alt="模型导入">
+</p>
 
-- 2D Live2D 主界面
-- 3D VRM 主界面
-- 模型 / 动作面板
-- 设置面板（通用 / Live2D / 3D / Root）
-
-添加后取消下面注释：
-
-<!--
-| Live2D | 3D |
-| --- | --- |
-| ![Live2D](docs/screenshots/2d.png) | ![VRM](docs/screenshots/3d.png) |
--->
+<p align="center">
+  <img src="docs/screenshots/settings-1.jpg" width="260" alt="设置 1">
+  <img src="docs/screenshots/settings-2.jpg" width="260" alt="设置 2">
+</p>
 
 ---
 
@@ -132,6 +130,15 @@ MyModel/
 ├── textures/
 └── motions/
 ```
+
+### 2D 手势
+
+| 手势 | 操作 |
+| --- | --- |
+| 单指拖动 | 视线跟随 / 模型互动 |
+| 单击 | 触发模型动作或表情 |
+| 双指捏合 | 放大或缩小模型，范围 0.5x–3.0x |
+| 长按后拖动 | 触发短振动，进入模型位置移动模式；松手结束 |
 
 ### 导入 VRM / GLB
 

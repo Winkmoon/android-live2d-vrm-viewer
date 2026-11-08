@@ -554,6 +554,13 @@ void LAppModel::Draw(CubismMatrix44& matrix)
 
     matrix.MultiplyByMatrix(_modelMatrix);
 
+    // Screen-space translation is applied after the model matrix so long-press
+    // dragging moves the model without changing its scale or aspect ratio.
+    if (_drawOffsetX != 0.0f || _drawOffsetY != 0.0f)
+    {
+        matrix.TranslateRelative(_drawOffsetX, _drawOffsetY);
+    }
+
     GetRenderer<Rendering::CubismRenderer_OpenGLES2>()->SetMvpMatrix(&matrix);
 
     DoDraw();
@@ -696,6 +703,12 @@ void LAppModel::SetParameterValue(const csmChar* id, csmFloat32 value)
 void LAppModel::ResetParameters()
 {
     _parameterOverrides.Clear();
+}
+
+void LAppModel::SetDrawOffset(csmFloat32 x, csmFloat32 y)
+{
+    _drawOffsetX = x;
+    _drawOffsetY = y;
 }
 
 void LAppModel::SetMaskScale(csmFloat32 scale)

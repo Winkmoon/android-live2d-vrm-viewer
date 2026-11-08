@@ -50,6 +50,10 @@ public:
     void ReloadAllRenderers();
 
     void SetViewMatrix(Live2D::Cubism::Framework::CubismMatrix44* m);
+    void SetModelScale(Csm::csmFloat32 scale);
+    void TranslateModel(Csm::csmFloat32 dxPixels, Csm::csmFloat32 dyPixels);
+    void ResetModelPosition();
+    Csm::csmFloat32 GetModelScale() const { return _modelScale; }
 
 private:
     LAppLive2DManager();
@@ -61,4 +65,7 @@ private:
     Csm::csmVector<Csm::csmString> _modelBase;
     Csm::csmVector<Csm::csmString> _modelJson;
     bool _initialized;
+    Csm::csmFloat32 _modelScale;
+    Csm::csmFloat32 _modelOffsetX;
+    Csm::csmFloat32 _modelOffsetY;
 };

@@ -111,12 +111,12 @@
     <string name="avatar3d_import">导入 VRM/GLB</string>
     <string name="avatar3d_models">3D 模型</string>
     <string name="avatar3d_reset">重置视角</string>
-    <string name="avatar3d_empty">点击右上角 + 导入 .vrm 或 .glb 头像开始使用。</string>
-    <string name="avatar3d_empty_short">未选择头像</string>
-    <string name="avatar3d_importing">正在导入头像…</string>
+    <string name="avatar3d_empty">打开底部“模型”菜单，导入 .vrm 或 .glb 模型开始使用。</string>
+    <string name="avatar3d_empty_short">未选择模型</string>
+    <string name="avatar3d_importing">正在导入模型…</string>
     <string name="avatar3d_import_failed">导入失败，请选择 .vrm 或 .glb 文件。</string>
-    <string name="avatar3d_import_hint">支持单文件 .vrm/.glb，通过右上角 + 导入；不支持 FBX、.unitypackage、.vrca。</string>
-    <string name="avatar3d_no_models">还没有 3D 头像。</string>
+    <string name="avatar3d_import_hint">支持单文件 .vrm/.glb，请在底部“模型”菜单中导入；不支持 FBX、.unitypackage、.vrca。</string>
+    <string name="avatar3d_no_models">还没有 3D 模型。</string>
     <string name="avatar3d_settings">3D 设置</string>
     <string name="avatar3d_settings_subtitle">WebView 渲染器选项</string>
     <string name="avatar3d_quality">渲染质量</string>

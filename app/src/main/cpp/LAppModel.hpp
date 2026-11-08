@@ -119,6 +119,7 @@ public:
     void ResetParameters();
 
     void SetMaskScale(Csm::csmFloat32 scale);
+    void SetDrawOffset(Csm::csmFloat32 x, Csm::csmFloat32 y);
     Csm::csmFloat32 GetMaskScale() const { return _maskScale; }
     void ApplyMaskScale();
 
@@ -207,6 +208,8 @@ private:
     Csm::Rendering::CubismRenderTarget_OpenGLES2  _renderBuffer;   ///< フレームバッファ以外の描画先
 
     Csm::csmFloat32 _maskScale = 1.0f;
+    Csm::csmFloat32 _drawOffsetX = 0.0f;
+    Csm::csmFloat32 _drawOffsetY = 0.0f;
     Csm::csmInt32 _lastDrawCallCount = 0;
     Csm::csmInt32 _lastVertexCount = 0;
     Csm::csmMap<Csm::csmString, Csm::csmFloat32> _parameterOverrides;

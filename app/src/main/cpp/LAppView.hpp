@@ -87,6 +87,11 @@ public:
     void OnTouchesEnded(float pointX, float pointY);
 
     /**
+     * @brief タッチがキャンセルされたときに呼ばれる。タップ判定は行わない。
+     */
+    void OnTouchesCancelled();
+
+    /**
      * @brief   モデル1体を描画する直前にコールされる
      */
     void PreModelDraw(LAppModel &refModel);

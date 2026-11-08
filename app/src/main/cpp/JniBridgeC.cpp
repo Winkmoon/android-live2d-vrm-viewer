@@ -18,6 +18,7 @@
 #include "LAppDefine.hpp"
 #include "LAppDelegate.hpp"
 #include "LAppLive2DManager.hpp"
+#include "LAppView.hpp"
 #include "LAppModel.hpp"
 #include "LAppTextureManager.hpp"
 
@@ -321,6 +322,34 @@ JNIEXPORT void JNICALL
 Java_com_winkmoon_xinran_Live2DNative_nativeOnTouchesMoved(JNIEnv*, jclass, jfloat x, jfloat y)
 {
     LAppDelegate::GetInstance()->OnTouchMoved(x, y);
+}
+
+JNIEXPORT void JNICALL
+Java_com_winkmoon_xinran_Live2DNative_nativeOnTouchesCancelled(JNIEnv*, jclass)
+{
+    auto* view = LAppDelegate::GetInstance()->GetView();
+    if (view != nullptr)
+    {
+        view->OnTouchesCancelled();
+    }
+}
+
+JNIEXPORT void JNICALL
+Java_com_winkmoon_xinran_Live2DNative_nativeSetModelScale(JNIEnv*, jclass, jfloat scale)
+{
+    LAppLive2DManager::GetInstance()->SetModelScale(scale);
+}
+
+JNIEXPORT void JNICALL
+Java_com_winkmoon_xinran_Live2DNative_nativeTranslateModel(JNIEnv*, jclass, jfloat dx, jfloat dy)
+{
+    LAppLive2DManager::GetInstance()->TranslateModel(dx, dy);
+}
+
+JNIEXPORT void JNICALL
+Java_com_winkmoon_xinran_Live2DNative_nativeResetModelPosition(JNIEnv*, jclass)
+{
+    LAppLive2DManager::GetInstance()->ResetModelPosition();
 }
 
 JNIEXPORT void JNICALL

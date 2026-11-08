@@ -111,11 +111,11 @@
     <string name="avatar3d_import">Import VRM/GLB</string>
     <string name="avatar3d_models">3D models</string>
     <string name="avatar3d_reset">Reset view</string>
-    <string name="avatar3d_empty">Tap + in the top-right to import a .vrm or .glb avatar.</string>
+    <string name="avatar3d_empty">Open the Model menu at the bottom and import a .vrm or .glb avatar.</string>
     <string name="avatar3d_empty_short">No avatar selected</string>
     <string name="avatar3d_importing">Importing avatar…</string>
     <string name="avatar3d_import_failed">Import failed. Choose a .vrm or .glb file.</string>
-    <string name="avatar3d_import_hint">Single-file .vrm and .glb are supported. Use + in the top-right to import. FBX, .unitypackage and .vrca are not supported.</string>
+    <string name="avatar3d_import_hint">Single-file .vrm and .glb are supported. Import from the Model menu. FBX, .unitypackage and .vrca are not supported.</string>
     <string name="avatar3d_no_models">No 3D avatars yet.</string>
     <string name="avatar3d_settings">3D settings</string>
     <string name="avatar3d_settings_subtitle">WebView renderer options</string>

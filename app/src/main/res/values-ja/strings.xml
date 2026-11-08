@@ -111,11 +111,11 @@
     <string name="avatar3d_import">VRM/GLB をインポート</string>
     <string name="avatar3d_models">3D モデル</string>
     <string name="avatar3d_reset">視点をリセット</string>
-    <string name="avatar3d_empty">右上の + から .vrm または .glb アバターをインポートしてください。</string>
+    <string name="avatar3d_empty">下部の「モデル」メニューから .vrm または .glb アバターをインポートしてください。</string>
     <string name="avatar3d_empty_short">アバター未選択</string>
     <string name="avatar3d_importing">アバターをインポート中…</string>
     <string name="avatar3d_import_failed">インポートに失敗しました。.vrm または .glb を選択してください。</string>
-    <string name="avatar3d_import_hint">単一ファイルの .vrm/.glb に対応。右上の + からインポートします。FBX、.unitypackage、.vrca は非対応です。</string>
+    <string name="avatar3d_import_hint">単一ファイルの .vrm/.glb に対応。下部の「モデル」メニューからインポートします。FBX、.unitypackage、.vrca は非対応です。</string>
     <string name="avatar3d_no_models">3D アバターはまだありません。</string>
     <string name="avatar3d_settings">3D 設定</string>
     <string name="avatar3d_settings_subtitle">WebView レンダラー設定</string>

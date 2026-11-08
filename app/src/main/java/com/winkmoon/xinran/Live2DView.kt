@@ -6,8 +6,14 @@ import android.content.ContextWrapper
 import android.graphics.PixelFormat
 import android.opengl.GLSurfaceView
 import android.os.Build
+import android.os.Vibrator
+import android.os.VibratorManager
+import android.os.VibrationEffect
 import android.util.AttributeSet
+import android.view.GestureDetector
+import android.view.HapticFeedbackConstants
 import android.view.MotionEvent
+import android.view.ScaleGestureDetector
 import android.view.Surface
 import android.view.View
 import javax.microedition.khronos.egl.EGLConfig
@@ -35,6 +41,43 @@ class Live2DView @JvmOverloads constructor(
     private var adpfEnabled = true
     private var mipmapsEnabled = true
     private var renderThreadTid = 0
+    private var modelScale = 1.0f
+    private var pinching = false
+    private var movingModel = false
+    private var lastTouchX = 0f
+    private var lastTouchY = 0f
+
+    private val gestureDetector = GestureDetector(
+        context,
+        object : GestureDetector.SimpleOnGestureListener() {
+            override fun onLongPress(e: MotionEvent) {
+                if (pinching || e.pointerCount != 1) return
+                movingModel = true
+                vibrate()
+                queueEvent { nativeOnTouchesCancelled() }
+            }
+        }
+    )
+
+    private val scaleDetector = ScaleGestureDetector(
+        context,
+        object : ScaleGestureDetector.SimpleOnScaleGestureListener() {
+            override fun onScaleBegin(detector: ScaleGestureDetector): Boolean {
+                pinching = true
+                queueEvent { nativeOnTouchesCancelled() }
+                return true
+            }
+
+            override fun onScale(detector: ScaleGestureDetector): Boolean {
+                val next = (modelScale * detector.scaleFactor).coerceIn(0.5f, 3.0f)
+                if (abs(next - modelScale) > 0.001f) {
+                    modelScale = next
+                    queueEvent { nativeSetModelScale(modelScale) }
+                }
+                return true
+            }
+        }
+    )
 
     @Volatile
     var glVersion: String = ""
@@ -52,15 +95,65 @@ class Live2DView @JvmOverloads constructor(
     }
 
     private fun handleTouch(event: MotionEvent): Boolean {
+        scaleDetector.onTouchEvent(event)
+        gestureDetector.onTouchEvent(event)
+
         val x = event.x
         val y = event.y
         when (event.actionMasked) {
-            MotionEvent.ACTION_DOWN -> queueEvent { nativeOnTouchesBegan(x, y) }
-            MotionEvent.ACTION_MOVE -> queueEvent { nativeOnTouchesMoved(x, y) }
-            MotionEvent.ACTION_UP, MotionEvent.ACTION_CANCEL ->
-                queueEvent { nativeOnTouchesEnded(x, y) }
+            MotionEvent.ACTION_DOWN -> {
+                pinching = false
+                movingModel = false
+                lastTouchX = x
+                lastTouchY = y
+                queueEvent { nativeOnTouchesBegan(x, y) }
+            }
+            MotionEvent.ACTION_POINTER_DOWN -> {
+                pinching = true
+                movingModel = false
+                queueEvent { nativeOnTouchesCancelled() }
+            }
+            MotionEvent.ACTION_MOVE -> {
+                if (movingModel && !pinching) {
+                    val dx = x - lastTouchX
+                    val dy = y - lastTouchY
+                    lastTouchX = x
+                    lastTouchY = y
+                    if (dx != 0f || dy != 0f) {
+                        queueEvent { nativeTranslateModel(dx, dy) }
+                    }
+                } else if (!pinching && !scaleDetector.isInProgress) {
+                    queueEvent { nativeOnTouchesMoved(x, y) }
+                }
+            }
+            MotionEvent.ACTION_UP, MotionEvent.ACTION_CANCEL -> {
+                if (!pinching && !movingModel) {
+                    queueEvent { nativeOnTouchesEnded(x, y) }
+                } else if (movingModel) {
+                    queueEvent { nativeOnTouchesCancelled() }
+                }
+                pinching = false
+                movingModel = false
+            }
         }
         return true
+    }
+
+    private fun vibrate() {
+        val vibrator = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+            (context.getSystemService(Context.VIBRATOR_MANAGER_SERVICE) as? VibratorManager)
+                ?.defaultVibrator
+        } else {
+            @Suppress("DEPRECATION")
+            context.getSystemService(Context.VIBRATOR_SERVICE) as? Vibrator
+        }
+        if (vibrator != null) {
+            vibrator.vibrate(
+                VibrationEffect.createOneShot(35L, VibrationEffect.DEFAULT_AMPLITUDE)
+            )
+        } else {
+            performHapticFeedback(HapticFeedbackConstants.LONG_PRESS)
+        }
     }
 
     override fun onSurfaceCreated(gl: GL10?, config: EGLConfig?) {

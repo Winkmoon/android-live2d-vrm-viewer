@@ -84,6 +84,9 @@ void LAppLive2DManager::ReleaseInstance()
 LAppLive2DManager::LAppLive2DManager()
     : _viewMatrix(NULL)
     , _initialized(false)
+    , _modelScale(1.0f)
+    , _modelOffsetX(0.0f)
+    , _modelOffsetY(0.0f)
 {
     _viewMatrix = new CubismMatrix44();
     SetUpModel();
@@ -375,6 +378,12 @@ void LAppLive2DManager::OnUpdate() const
             projection.Scale(1.0f / aspectRatio, 1.0f);
         }
 
+        // Apply zoom to the model matrix so the screen aspect projection
+        // remains untouched. A uniform model scale keeps the model's
+        // original proportions at every zoom level.
+        model->GetModelMatrix()->ScaleRelative(_modelScale, _modelScale);
+        model->SetDrawOffset(_modelOffsetX, _modelOffsetY);
+
         if (_viewMatrix != NULL)
         {
             projection.MultiplyByMatrix(_viewMatrix);
@@ -428,6 +437,8 @@ void LAppLive2DManager::ChangeScene(Csm::csmInt32 index)
     csmString modelJsonName(_modelJson[index]);
 
     ReleaseAllModel();
+    _modelOffsetX = 0.0f;
+    _modelOffsetY = 0.0f;
     _models.PushBack(new LAppModel());
     _models[0]->LoadAssets(modelPath.GetRawString(), modelJsonName.GetRawString());
 
@@ -490,6 +501,54 @@ void LAppLive2DManager::ReloadAllRenderers()
         {
             _models[i]->ReloadRenderer();
         }
+    }
+}
+
+void LAppLive2DManager::SetModelScale(csmFloat32 scale)
+{
+    if (scale < 0.5f)
+    {
+        scale = 0.5f;
+    }
+    if (scale > 3.0f)
+    {
+        scale = 3.0f;
+    }
+    _modelScale = scale;
+}
+
+void LAppLive2DManager::TranslateModel(csmFloat32 dxPixels, csmFloat32 dyPixels)
+{
+    const int width = LAppDelegate::GetInstance()->GetWindowWidth();
+    const int height = LAppDelegate::GetInstance()->GetWindowHeight();
+    if (width <= 0 || height <= 0)
+    {
+        return;
+    }
+
+    // Convert screen pixels to clip-space units. Y is inverted because
+    // Android touch coordinates grow downward while clip-space Y grows upward.
+    _modelOffsetX += (2.0f * dxPixels) / static_cast<csmFloat32>(width);
+    _modelOffsetY -= (2.0f * dyPixels) / static_cast<csmFloat32>(height);
+
+    _modelOffsetX = std::max(-1.6f, std::min(1.6f, _modelOffsetX));
+    _modelOffsetY = std::max(-1.6f, std::min(1.6f, _modelOffsetY));
+
+    LAppModel* model = GetCurrentModel();
+    if (model != nullptr)
+    {
+        model->SetDrawOffset(_modelOffsetX, _modelOffsetY);
+    }
+}
+
+void LAppLive2DManager::ResetModelPosition()
+{
+    _modelOffsetX = 0.0f;
+    _modelOffsetY = 0.0f;
+    LAppModel* model = GetCurrentModel();
+    if (model != nullptr)
+    {
+        model->SetDrawOffset(0.0f, 0.0f);
     }
 }
 
