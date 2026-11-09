@@ -37,7 +37,7 @@
   - 可选 Root 性能模式
   - 可选 Root 刷新率控制
 - **兼容性**
-  - Android 9 及以上
+  - Android 6 及以上
 
 ---
 
@@ -61,7 +61,7 @@
 ### 环境要求
 
 - JDK 17
-- Android SDK Platform 37
+- Android SDK Platform 37 / minSdk 23
 - Android NDK `27.2.12479018`
 - CMake 3.22+
 - 官方 **Live2D Cubism SDK for Native 5-r.5**

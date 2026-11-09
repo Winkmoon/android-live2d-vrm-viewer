@@ -1,6 +1,7 @@
 package com.winkmoon.xinran
 
 import android.content.Context
+import android.os.Build
 import android.view.WindowManager
 import kotlin.math.roundToInt
 
@@ -19,7 +20,9 @@ object RefreshRateUtils {
         runCatching {
             display.supportedModes.forEach { mode ->
                 addTier(tiers, mode.refreshRate)
-                mode.alternativeRefreshRates.forEach { addTier(tiers, it) }
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+                    mode.alternativeRefreshRates.forEach { addTier(tiers, it) }
+                }
             }
             addTier(tiers, display.refreshRate)
         }

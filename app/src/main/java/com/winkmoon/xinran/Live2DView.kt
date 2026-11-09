@@ -7,7 +7,6 @@ import android.graphics.PixelFormat
 import android.opengl.GLSurfaceView
 import android.os.Build
 import android.os.Vibrator
-import android.os.VibratorManager
 import android.os.VibrationEffect
 import android.util.AttributeSet
 import android.view.GestureDetector
@@ -140,17 +139,17 @@ class Live2DView @JvmOverloads constructor(
     }
 
     private fun vibrate() {
-        val vibrator = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-            (context.getSystemService(Context.VIBRATOR_MANAGER_SERVICE) as? VibratorManager)
-                ?.defaultVibrator
-        } else {
-            @Suppress("DEPRECATION")
-            context.getSystemService(Context.VIBRATOR_SERVICE) as? Vibrator
-        }
+        @Suppress("DEPRECATION")
+        val vibrator = context.getSystemService(Context.VIBRATOR_SERVICE) as? Vibrator
         if (vibrator != null) {
-            vibrator.vibrate(
-                VibrationEffect.createOneShot(35L, VibrationEffect.DEFAULT_AMPLITUDE)
-            )
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                vibrator.vibrate(
+                    VibrationEffect.createOneShot(35L, VibrationEffect.DEFAULT_AMPLITUDE)
+                )
+            } else {
+                @Suppress("DEPRECATION")
+                vibrator.vibrate(35L)
+            }
         } else {
             performHapticFeedback(HapticFeedbackConstants.LONG_PRESS)
         }
