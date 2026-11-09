@@ -124,6 +124,8 @@
     <string name="avatar3d_shadows_subtitle">모델 및 바닥 그림자</string>
     <string name="settings_common">공통</string>
     <string name="settings_common_subtitle">언어 및 화면 방향</string>
+    <string name="hide_ui_on_motion">모션 재생 중 UI 숨기기</string>
+    <string name="hide_ui_on_motion_subtitle">직접 모션을 재생하는 동안 상단과 하단 컨트롤을 숨깁니다. 자동 대기 모션에서는 숨기지 않습니다.</string>
     <string name="settings_live2d">Live2D</string>
     <string name="settings_live2d_subtitle">Cubism 렌더링 및 스케줄링</string>
     <string name="settings_avatar3d">3D 아바타</string>

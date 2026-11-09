@@ -178,6 +178,7 @@ fun UnifiedViewerApp(
             }
         }
 
+        if (!liveState.chromeHidden) {
         Box(modifier = Modifier.zIndex(2f)) {
         ViewerTopBar(
             selected3D = mode == ViewerMode.Avatar3D,
@@ -202,7 +203,7 @@ fun UnifiedViewerApp(
 
         }
         AnimatedVisibility(
-            visible = showStats,
+            visible = showStats && !liveState.chromeHidden,
             modifier = Modifier
                 .align(Alignment.TopEnd)
                 .zIndex(2f)
@@ -235,9 +236,10 @@ fun UnifiedViewerApp(
             onResetView = { avatarState.resetView?.invoke() }
         )
         }
+        }
     }
 
-    if (showSettings) {
+    if (showSettings && !liveState.chromeHidden) {
         val sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = false)
         ModalBottomSheet(
             onDismissRequest = { showSettings = false },

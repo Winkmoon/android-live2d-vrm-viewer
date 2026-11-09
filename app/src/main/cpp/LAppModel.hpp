@@ -120,6 +120,8 @@ public:
 
     void SetMaskScale(Csm::csmFloat32 scale);
     void SetDrawOffset(Csm::csmFloat32 x, Csm::csmFloat32 y);
+    void SetUserMotionHandle(Csm::CubismMotionQueueEntryHandle handle);
+    Csm::csmBool IsUserMotionPlaying() const;
     Csm::csmFloat32 GetMaskScale() const { return _maskScale; }
     void ApplyMaskScale();
 
@@ -210,6 +212,8 @@ private:
     Csm::csmFloat32 _maskScale = 1.0f;
     Csm::csmFloat32 _drawOffsetX = 0.0f;
     Csm::csmFloat32 _drawOffsetY = 0.0f;
+    Csm::CubismMotionQueueEntryHandle _userMotionHandle = nullptr;
+    Csm::csmBool _hasUserMotion = false;
     Csm::csmInt32 _lastDrawCallCount = 0;
     Csm::csmInt32 _lastVertexCount = 0;
     Csm::csmMap<Csm::csmString, Csm::csmFloat32> _parameterOverrides;

@@ -124,6 +124,8 @@
     <string name="avatar3d_shadows_subtitle">Model and ground shadows</string>
     <string name="settings_common">Common</string>
     <string name="settings_common_subtitle">Language and screen orientation</string>
+    <string name="hide_ui_on_motion">Hide UI while playing motions</string>
+    <string name="hide_ui_on_motion_subtitle">Hides the top and bottom controls while a motion you start is playing. Idle motions do not hide the UI.</string>
     <string name="settings_live2d">Live2D</string>
     <string name="settings_live2d_subtitle">Cubism rendering and scheduling</string>
     <string name="settings_avatar3d">3D avatar</string>

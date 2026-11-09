@@ -124,6 +124,8 @@
     <string name="avatar3d_shadows_subtitle">モデルと地面の影</string>
     <string name="settings_common">共通</string>
     <string name="settings_common_subtitle">言語と画面の向き</string>
+    <string name="hide_ui_on_motion">モーション再生中は UI を非表示</string>
+    <string name="hide_ui_on_motion_subtitle">手動でモーションを再生している間、上部と下部のコントロールを隠します。自動の待機モーションでは非表示になりません。</string>
     <string name="settings_live2d">Live2D</string>
     <string name="settings_live2d_subtitle">Cubism レンダリングとスケジューリング</string>
     <string name="settings_avatar3d">3D アバター</string>

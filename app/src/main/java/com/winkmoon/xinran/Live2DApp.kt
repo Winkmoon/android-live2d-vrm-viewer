@@ -98,7 +98,10 @@ import java.io.File
 import java.util.Locale
 import java.util.zip.ZipInputStream
 import kotlin.math.roundToInt
+import kotlinx.coroutines.CompletableDeferred
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.withTimeoutOrNull
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
@@ -141,6 +144,7 @@ fun Live2DContent(
     val context = LocalContext.current
     AppSettings.init(context)
     val scope = rememberCoroutineScope()
+    var chromeHideJob by remember { mutableStateOf<Job?>(null) }
     val colorScheme = MaterialTheme.colorScheme
 
     var renderView by remember { mutableStateOf<Live2DView?>(null) }
@@ -188,6 +192,26 @@ fun Live2DContent(
     fun showFeedback(message: String) {
         actionFeedback = message
         feedbackNonce++
+    }
+
+    fun hideChromeForMotion() {
+        if (!AppSettings.hideUiOnMotion) return
+        chromeHideJob?.cancel()
+        state.chromeHidden = true
+        chromeHideJob = scope.launch {
+            var elapsed = 0
+            while (elapsed < 12_000) {
+                val view = renderView
+                if (view == null) break
+                val result = CompletableDeferred<Boolean>()
+                view.queryUserMotionPlaying { result.complete(it) }
+                val playing = withTimeoutOrNull(700) { result.await() } ?: false
+                if (!playing) break
+                delay(100)
+                elapsed += 100
+            }
+            state.chromeHidden = false
+        }
     }
 
     LaunchedEffect(actionFeedback, feedbackNonce) {
@@ -441,7 +465,7 @@ fun Live2DContent(
         )
 
         AnimatedVisibility(
-            visible = actionFeedback != null,
+            visible = actionFeedback != null && !state.chromeHidden,
             modifier = Modifier
                 .align(Alignment.BottomCenter)
                 .windowInsetsPadding(WindowInsets.safeDrawing)
@@ -519,6 +543,7 @@ fun Live2DContent(
                 },
                 onPlayMotion = { group, index ->
                     renderView?.startMotion(group, index)
+                    hideChromeForMotion()
                     playingMotion = "$group:$index"
                     showFeedback(
                         context.getString(
@@ -530,6 +555,7 @@ fun Live2DContent(
                 },
                 onRandomMotion = { group ->
                     renderView?.startRandomMotion(group)
+                    hideChromeForMotion()
                     playingMotion = null
                     showFeedback(
                         context.getString(

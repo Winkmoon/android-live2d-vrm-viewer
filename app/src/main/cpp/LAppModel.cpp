@@ -705,6 +705,21 @@ void LAppModel::ResetParameters()
     _parameterOverrides.Clear();
 }
 
+void LAppModel::SetUserMotionHandle(CubismMotionQueueEntryHandle handle)
+{
+    _userMotionHandle = handle;
+    _hasUserMotion = handle != InvalidMotionQueueEntryHandleValue;
+}
+
+csmBool LAppModel::IsUserMotionPlaying() const
+{
+    if (!_hasUserMotion || _motionManager == nullptr)
+    {
+        return false;
+    }
+    return !_motionManager->IsFinished(_userMotionHandle);
+}
+
 void LAppModel::SetDrawOffset(csmFloat32 x, csmFloat32 y)
 {
     _drawOffsetX = x;

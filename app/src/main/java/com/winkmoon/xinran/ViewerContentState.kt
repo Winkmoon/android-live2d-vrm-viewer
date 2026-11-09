@@ -12,6 +12,7 @@ import androidx.compose.runtime.setValue
 class Live2DContentState {
     var stats by mutableStateOf(PerfStats())
     var modelName by mutableStateOf("")
+    var chromeHidden by mutableStateOf(false)
 
     var openModels: (() -> Unit)? = null
     var openMotions: (() -> Unit)? = null

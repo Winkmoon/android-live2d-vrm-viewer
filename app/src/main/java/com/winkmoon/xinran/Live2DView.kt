@@ -229,6 +229,13 @@ class Live2DView @JvmOverloads constructor(
         queueEvent { nativeStartMotion(group, index) }
     fun startRandomMotion(group: String) =
         queueEvent { nativeStartRandomMotion(group) }
+
+    fun queryUserMotionPlaying(onResult: (Boolean) -> Unit) {
+        queueEvent {
+            val playing = nativeIsUserMotionPlaying()
+            post { onResult(playing) }
+        }
+    }
     fun setExpression(name: String) = queueEvent { nativeSetExpression(name) }
     fun setParameter(name: String, value: Float) =
         queueEvent { nativeSetParameter(name, value) }

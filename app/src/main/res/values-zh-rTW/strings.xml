@@ -124,6 +124,8 @@
     <string name="avatar3d_shadows_subtitle">模型投影與地面陰影</string>
     <string name="settings_common">通用</string>
     <string name="settings_common_subtitle">語言與螢幕方向</string>
+    <string name="hide_ui_on_motion">動作播放時隱藏 UI</string>
+    <string name="hide_ui_on_motion_subtitle">手動播放動作時暫時隱藏頂部與底部控制項；自動待機動作不會隱藏。</string>
     <string name="settings_live2d">Live2D</string>
     <string name="settings_live2d_subtitle">Cubism 渲染與排程</string>
     <string name="settings_avatar3d">3D 虛擬形象</string>

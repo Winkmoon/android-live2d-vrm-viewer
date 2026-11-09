@@ -25,6 +25,7 @@ object AppSettings {
     private const val KEY_ADPF = "adpf"
     private const val KEY_AVATAR_QUALITY = "avatar_quality"
     private const val KEY_AVATAR_SHADOWS = "avatar_shadows"
+    private const val KEY_HIDE_UI_ON_MOTION = "hide_ui_on_motion"
 
     private var prefs: android.content.SharedPreferences? = null
     private var initialized = false
@@ -45,6 +46,8 @@ object AppSettings {
         private set
     var avatarShadows by mutableStateOf(true)
         private set
+    var hideUiOnMotion by mutableStateOf(true)
+        private set
 
     fun init(context: Context) {
         if (initialized) return
@@ -61,6 +64,7 @@ object AppSettings {
         )
         avatarQuality = p.getFloat(KEY_AVATAR_QUALITY, 1f)
         avatarShadows = p.getBoolean(KEY_AVATAR_SHADOWS, true)
+        hideUiOnMotion = p.getBoolean(KEY_HIDE_UI_ON_MOTION, true)
         initialized = true
     }
 
@@ -106,5 +110,10 @@ object AppSettings {
     fun updateAvatarShadows(value: Boolean) {
         avatarShadows = value
         prefs?.edit()?.putBoolean(KEY_AVATAR_SHADOWS, value)?.apply()
+    }
+
+    fun updateHideUiOnMotion(value: Boolean) {
+        hideUiOnMotion = value
+        prefs?.edit()?.putBoolean(KEY_HIDE_UI_ON_MOTION, value)?.apply()
     }
 }

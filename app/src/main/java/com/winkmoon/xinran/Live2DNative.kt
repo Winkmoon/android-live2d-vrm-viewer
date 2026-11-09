@@ -91,6 +91,7 @@ external fun nativeGetMotionGroups(): Array<String>
 external fun nativeGetMotionCount(group: String): Int
 external fun nativeStartMotion(group: String, index: Int): Boolean
 external fun nativeStartRandomMotion(group: String): Boolean
+external fun nativeIsUserMotionPlaying(): Boolean
 external fun nativeGetExpressions(): Array<String>
 external fun nativeSetExpression(name: String): Boolean
 external fun nativeSetParameter(name: String, value: Float)

@@ -455,7 +455,12 @@ Java_com_winkmoon_xinran_Live2DNative_nativeStartMotion(JNIEnv* env, jclass, jst
     const char* chars = env->GetStringUTFChars(group, nullptr);
     const auto handle = model->StartMotion(chars, index, LAppDefine::PriorityForce);
     env->ReleaseStringUTFChars(group, chars);
-    return handle != Csm::InvalidMotionQueueEntryHandleValue ? JNI_TRUE : JNI_FALSE;
+    if (handle != Csm::InvalidMotionQueueEntryHandleValue)
+    {
+        model->SetUserMotionHandle(handle);
+        return JNI_TRUE;
+    }
+    return JNI_FALSE;
 }
 
 JNIEXPORT jboolean JNICALL
@@ -469,7 +474,19 @@ Java_com_winkmoon_xinran_Live2DNative_nativeStartRandomMotion(JNIEnv* env, jclas
     const char* chars = env->GetStringUTFChars(group, nullptr);
     const auto handle = model->StartRandomMotion(chars, LAppDefine::PriorityForce);
     env->ReleaseStringUTFChars(group, chars);
-    return handle != Csm::InvalidMotionQueueEntryHandleValue ? JNI_TRUE : JNI_FALSE;
+    if (handle != Csm::InvalidMotionQueueEntryHandleValue)
+    {
+        model->SetUserMotionHandle(handle);
+        return JNI_TRUE;
+    }
+    return JNI_FALSE;
+}
+
+JNIEXPORT jboolean JNICALL
+Java_com_winkmoon_xinran_Live2DNative_nativeIsUserMotionPlaying(JNIEnv*, jclass)
+{
+    auto* model = LAppLive2DManager::GetInstance()->GetCurrentModel();
+    return model != nullptr && model->IsUserMotionPlaying() ? JNI_TRUE : JNI_FALSE;
 }
 
 JNIEXPORT jobjectArray JNICALL

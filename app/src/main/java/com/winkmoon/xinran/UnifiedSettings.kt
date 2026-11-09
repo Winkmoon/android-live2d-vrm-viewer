@@ -151,6 +151,12 @@ fun UnifiedSettingsContent(
         stringResource(R.string.settings_live2d_subtitle)
     )
 
+    UnifiedSwitchRow(
+        title = stringResource(R.string.hide_ui_on_motion),
+        subtitle = stringResource(R.string.hide_ui_on_motion_subtitle),
+        checked = AppSettings.hideUiOnMotion,
+        onCheckedChange = { AppSettings.updateHideUiOnMotion(it) }
+    )
     UnifiedSliderRow(
         title = stringResource(R.string.render_scale),
         valueText = "${(AppSettings.renderScale * 100f).roundToInt()}%",
